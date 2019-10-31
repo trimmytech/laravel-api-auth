@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\ProfilePicture;
+use App\UserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -31,9 +33,24 @@ class UserAuthController extends Controller
             'email' => $request->email,
             'username' => $request->username,
             'password' => bcrypt($request->password),
-            'phone' => $request->phone
+            'phone' => $request->phone,
+        ]);
+        $profile = new UserProfile([
+            'address' => $request->address,
+            'skype_username' => $request->skype_username,
+            'dob' => $request->dob,
         ]);
         $user->save();
+        //save profile
+        $user->profile()->save($profile);
+        //
+        $img_url = new ProfilePicture([
+            'img_url' => $request->img_url,
+        ]);
+        //save image
+        $profile->profile_img()->save($img_url);
+
+
         return response()->json([
             'message' => 'User created'
         ], 201);
@@ -98,7 +115,8 @@ class UserAuthController extends Controller
         */
     public function user(Request $request)
     {
-        return response()->json($request->user());
+        $user = User::with('profile', 'profile.profile_img')->find($request->user()->id);
+        return response()->json($user);
     }
 
 }

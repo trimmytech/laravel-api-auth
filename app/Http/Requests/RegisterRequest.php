@@ -29,6 +29,10 @@ class RegisterRequest extends FormRequest
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string|confirmed',
             'phone' => 'required|string',
+            'address' => 'string|nullable',
+             'skype_username' => 'string|nullable',
+             'dob' => 'string|nullable',
+             'img_url' => 'string|nullable',
         ];
     }
 

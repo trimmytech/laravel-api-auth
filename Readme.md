@@ -27,7 +27,7 @@ php artisan migrate
 ```
 
 ### Install Passport 
-
+php artisan make:model Profile -m
 ```bash
 php artisan passport:install
 
