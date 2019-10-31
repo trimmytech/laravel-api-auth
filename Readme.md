@@ -37,7 +37,7 @@ php artisan passport:install
 
 ```bash
 php artisan serve
-
+```
 
 URL :  http://127.0.0.1:8000
 
